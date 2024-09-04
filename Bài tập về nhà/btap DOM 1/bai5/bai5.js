@@ -1,0 +1,1 @@
+document.getElementById("image").src="./img32.jpg";

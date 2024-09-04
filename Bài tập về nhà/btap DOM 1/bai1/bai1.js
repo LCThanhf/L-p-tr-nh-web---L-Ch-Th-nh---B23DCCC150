@@ -1,0 +1,1 @@
+document.getElementById("title").innerText = "Hello, DOM!";
