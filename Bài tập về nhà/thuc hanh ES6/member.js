@@ -1,5 +1,5 @@
 const member = {
-    name: "Dương Minh Trí",
+    name: "Tài Vũ",
   };
   
   export default member;

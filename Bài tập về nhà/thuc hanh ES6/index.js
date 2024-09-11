@@ -162,7 +162,7 @@ class MEmber {
   class User extends Member {
     constructor(name, job) {
       super(name);
-      this.job = "Student";
+      this.job = "DevOps";
     }
   
     memberInfo() {
@@ -175,9 +175,9 @@ class MEmber {
   
   import member from './member.js';
   console.log(member.name); 
-  // Output: "Dương Minh Trí"
+  // Output: "Tài Vũ"
   
   /* hoặc */
   import TênBấtKỳ from './member.js';
   console.log(TênBấtKỳ.name); 
-  // Output: "Dương Minh Trí"
+  // Output: "Tài Vũ"
