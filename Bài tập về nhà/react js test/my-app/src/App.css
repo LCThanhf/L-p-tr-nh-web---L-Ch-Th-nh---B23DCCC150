@@ -1,0 +1,90 @@
+.App {
+  text-align: center;
+}
+
+.todo-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.todo-container input[type="text"],
+.todo-container input[type="date"] {
+  padding: 10px;
+  width: calc(100% - 22px);
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.todo-container button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.todo-container button:hover {
+  background-color: #218838;
+}
+
+.todo-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.todo-container li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.todo-container li.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.check-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.check-button:hover {
+  opacity: 0.8;
+}
+
+.due-date {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  font-size: 12px;
+  color: #888;
+}
+
+.due-date svg {
+  margin-right: 5px;
+}
+
+.completed {
+  text-decoration: line-through;
+}
