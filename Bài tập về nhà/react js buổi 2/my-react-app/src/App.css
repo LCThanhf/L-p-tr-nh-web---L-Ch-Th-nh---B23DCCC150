@@ -1,0 +1,92 @@
+.todo-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+li span {
+  font-size: 16px;
+  font-weight: 500;
+  flex-grow: 1; 
+  margin-left: 10px; 
+}
+
+li button.toggle-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px; 
+}
+
+li button.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+li button.delete-btn:hover {
+  background-color: darkred;
+}
+
+
+li.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+input[type="text"], input[type="date"], button.add-task {
+  width: 150px; /* Đặt cùng độ dài cho input và button */
+  padding: 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button.add-task {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button.add-task:hover {
+  background-color: #0056b3;
+}
