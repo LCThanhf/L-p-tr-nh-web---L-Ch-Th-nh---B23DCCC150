@@ -79,7 +79,6 @@ input[type="text"], input[type="date"], button.add-task {
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   vertical-align: middle;
-  color: #716d6d;
 }
 
 button.add-task {
@@ -87,7 +86,6 @@ button.add-task {
   color: white;
   border: none;
   cursor: pointer;
-
   width: 37px;
   height: 37px;
   border-radius: 5px;
