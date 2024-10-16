@@ -108,7 +108,7 @@ const TodoList = () => {
       <div>
         <input 
           type="text" 
-          placeholder="New task" 
+          placeholder="Add new task" 
           value={newTask} 
           onChange={(e) => setNewTask(e.target.value)} 
         />
@@ -117,7 +117,7 @@ const TodoList = () => {
           value={newDate} 
           onChange={(e) => setNewDate(e.target.value)} 
         />
-        <button className="add-task" onClick={addTask}>Add task</button>
+        <button className="add-task" onClick={addTask}>+</button>
       </div>
     </div>
   );
