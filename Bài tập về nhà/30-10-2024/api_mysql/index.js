@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();  
 const port = 3000;
-const db = require('./src/database');
+const db = require('./src/configs/database');
+const todoRoutes = require('./src/routes/todoRoutes');
 
 app.use(express.json());    
 
 app.listen(port, () => {    
     console.log(`Server is running at http://localhost:${port}`);
 });
+
+app.use('/api', todoRoutes); // Sử dụng các route đã định nghĩa
 
 // GET endpoint
 app.get('/', (req, res) => {
