@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css'; 
+import axios from 'axios';
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([
@@ -10,6 +11,16 @@ const TodoList = () => {
   ]);
   const [newTask, setNewTask] = useState('');
   const [newDate, setNewDate] = useState('');
+
+    // Lấy danh sách to-do từ API
+  useEffect(() => {
+    // Gọi API lấy danh sách to-do
+    axios.get('http://localhost:3001/api/tasks')
+      .then(response => {
+        setTasks(response.data);
+      })
+      .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
+  }, []);
 
   // Hàm lấy màu ngẫu nhiên
   const getRandomColor = () => {
@@ -56,8 +67,12 @@ const TodoList = () => {
   
   // function xóa task
   const deleteTask = (id) => {
-    const updatedTasks = tasks.filter(task => task.id !== id);
-    setTasks(updatedTasks);
+    axios.delete(`http://localhost:3001/api/delete/${id}`)
+      .then(() => {
+        const updatedTasks = tasks.filter(task => task.id !== id);
+        setTasks(updatedTasks);
+      })
+      .catch(error => console.error("Lỗi khi xóa dữ liệu:", error));
   };
   
   // Thêm mới task
@@ -71,18 +86,28 @@ const TodoList = () => {
         completed: false, 
         color: getRandomColor() 
       };
-      setTasks([...tasks, newTaskObj]);
-      setNewTask('');
-      setNewDate('');
+      axios.post('http://localhost:3001/api/add', newTaskObj)
+      .then(response => {
+        setTasks([...tasks, { ...newTaskObj, id: response.data.id }]);
+        setNewTask('');
+        setNewDate('');
+      })
+      .catch(error => console.error("Lỗi khi thêm dữ liệu:", error));
     }
   };
 
   // Toggle trạng thái task
   const toggleCompletion = (id) => {
-    const updatedTasks = tasks.map(task => 
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
+    const taskToUpdate = tasks.find(task => task.id === id);
+    const updatedTask = { ...taskToUpdate, completed: !taskToUpdate.completed };
+    axios.put(`http://localhost:3001/api/update/${id}`, updatedTask)
+      .then(() => {
+        const updatedTasks = tasks.map(task =>
+          task.id === id ? updatedTask : task
+        );
+        setTasks(updatedTasks);
+      })
+      .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
   };
 
   return (
@@ -105,7 +130,7 @@ const TodoList = () => {
         ))}
       </ul>
 
-      <div>
+      <div className="add-task-container">
         <input 
           type="text" 
           placeholder="Add new task" 

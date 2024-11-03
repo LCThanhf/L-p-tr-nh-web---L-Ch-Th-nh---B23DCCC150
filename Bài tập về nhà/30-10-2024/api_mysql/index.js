@@ -3,8 +3,10 @@ const app = express();
 const port = 3001;
 const db = require('./src/configs/database');
 const todoRoutes = require('./src/routes/todoRoutes');
+const cors = require('cors');
 
-app.use(express.json());    
+app.use(express.json());
+app.use(cors());    
 
 app.listen(port, () => {    
     console.log(`Server is running at http://localhost:${port}`);
