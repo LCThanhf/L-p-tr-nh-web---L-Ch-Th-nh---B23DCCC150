@@ -13,14 +13,18 @@ const TodoList = () => {
   const [newDate, setNewDate] = useState('');
 
     // Lấy danh sách to-do từ API
-  useEffect(() => {
-    // Gọi API lấy danh sách to-do
-    axios.get('http://localhost:3001/api/tasks')
-      .then(response => {
-        setTasks(response.data);
-      })
-      .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
-  }, []);
+    useEffect(() => {
+      axios.get('http://localhost:3001/api/')
+        .then(response => {
+          const formattedTasks = response.data.map(task => ({
+            ...task,
+            date: formatDueDate(task.date) // Sử dụng formatDueDate để định dạng ngày
+          }));
+          setTasks(formattedTasks);
+        })
+        .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
+    }, []);
+    
 
   // Hàm lấy màu ngẫu nhiên
   const getRandomColor = () => {
@@ -32,38 +36,39 @@ const TodoList = () => {
     return color;
   };
 
-  // Hàm xử lý ngày tháng
   const formatDueDate = (date) => {
     const currentDate = new Date();
     const dueDate = new Date(date);
-  
+    
     // Xóa phần giờ, phút, giây để chỉ so sánh ngày
     currentDate.setHours(0, 0, 0, 0);
     dueDate.setHours(0, 0, 0, 0);
-  
+    
     // Tính số ngày khác biệt giữa dueDate và currentDate
     const diffTime = dueDate - currentDate;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   
-    // Xác định ngày Thứ Hai đầu tuần và Chủ Nhật cuối tuần
+    // Kiểm tra nếu ngày là Today, Tomorrow hoặc các ngày trong tuần hiện tại
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Tomorrow';
+  
+    // Nếu không phải Today hoặc Tomorrow, kiểm tra nếu nằm trong tuần hiện tại
     const startOfWeek = new Date(currentDate);
     const dayOfWeek = currentDate.getDay();
-    const daysToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1); 
+    const daysToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
     startOfWeek.setDate(currentDate.getDate() - daysToMonday);
   
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); 
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
   
-    // Kiểm tra xem dueDate có nằm trong tuần hiện tại không
     if (dueDate >= startOfWeek && dueDate <= endOfWeek) {
-      if (diffDays === 0) return 'Today';
-      if (diffDays === 1) return 'Tomorrow';
-      return dueDate.toLocaleDateString('en-US', { weekday: 'long' }); 
+      return dueDate.toLocaleDateString('en-US', { weekday: 'long' });
     }
   
-    // Nếu ngoài tuần hiện tại, hiển thị dd/mm/yyyy
-    return dueDate.toLocaleDateString('en-GB'); 
+    // Nếu ngày ngoài tuần hiện tại, hiển thị dưới dạng dd/mm/yyyy
+    return dueDate.toLocaleDateString('en-GB');
   };
+  
   
   // function xóa task
   const deleteTask = (id) => {
@@ -78,17 +83,23 @@ const TodoList = () => {
   // Thêm mới task
   const addTask = () => {
     if (newTask && newDate) {
-      const newId = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
+      const formattedDate = new Date(newDate).toISOString().split('T')[0]; // Chuyển sang 'yyyy-mm-dd'
       const newTaskObj = { 
-        id: newId, 
         name: newTask, 
-        date: formatDueDate(newDate), 
+        date: formattedDate, 
         completed: false, 
         color: getRandomColor() 
       };
       axios.post('http://localhost:3001/api/add', newTaskObj)
       .then(response => {
-        setTasks([...tasks, { ...newTaskObj, id: response.data.id }]);
+      // Sử dụng formatDueDate để định dạng lại ngày trước khi thêm vào danh sách
+      const displayedDate = formatDueDate(newTaskObj.date); 
+      const newTaskWithFormattedDate = { 
+        ...newTaskObj, 
+        id: response.data.id, 
+        date: displayedDate // Hiển thị ngày đã được định dạng
+      };
+        setTasks([...tasks, newTaskWithFormattedDate]);
         setNewTask('');
         setNewDate('');
       })
