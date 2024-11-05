@@ -1,10 +1,16 @@
+body {
+  background-image: radial-gradient(circle, #a641b4 0%, #76e1f6 100%);
+  margin: 0;
+}
+
 .todo-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 30px auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 4px solid #333;
 }
 
 h1 {

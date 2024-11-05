@@ -41,7 +41,10 @@ app.post('/add', (req, res) => {
 app.put('/update/:id', (req, res) => {
     const { id } = req.params;
     const { name, date, completed, color } = req.body;
-    db.query('UPDATE tasks SET name = ?, date = ?, completed = ?, color = ? WHERE id = ?', [name, date, completed, color, id], (err, result) => {
+    db.query(
+        'UPDATE tasks SET name = ?, date = ?, completed = ?, color = ? WHERE id = ?', 
+        [name, date, completed, color, id], 
+        (err, result) => {
         if (err) {
             console.log('Error:', err);
             return res.status(500).send('Server error');
