@@ -110,20 +110,35 @@ const TodoList = () => {
   // Toggle trạng thái task
   const toggleCompletion = (id) => {
     const taskToUpdate = tasks.find(task => task.id === id);
-    const updatedTask = { ...taskToUpdate, completed: !taskToUpdate.completed };
+    // Kiểm tra xem `date` có ở định dạng chuẩn `yyyy-mm-dd` hay không
+    let originalDate = taskToUpdate.date;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(originalDate)) {
+      // Nếu không phải định dạng chuẩn, chuyển đổi về ngày gốc
+      originalDate = new Date(taskToUpdate.date).toISOString().split('T')[0];
+    }
+  
+    const updatedTask = { 
+      ...taskToUpdate, 
+      completed: !taskToUpdate.completed,
+      date: originalDate // Bảo toàn định dạng ngày chuẩn
+    };
+  
     axios.put(`http://localhost:3001/api/update/${id}`, updatedTask)
       .then(() => {
         const updatedTasks = tasks.map(task =>
-          task.id === id ? updatedTask : task
+          task.id === id 
+            ? { ...updatedTask, date: formatDueDate(updatedTask.date) } // Hiển thị date đã định dạng
+            : task
         );
         setTasks(updatedTasks);
       })
       .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
   };
+  
 
   return (
     <div className="todo-container">
-      <h1>My work 🎯</h1>
+      <h1>My Work🎯</h1>
       <ul>
         {tasks.map(task => (
           <li key={task.id} className={task.completed ? 'completed' : ''}>
