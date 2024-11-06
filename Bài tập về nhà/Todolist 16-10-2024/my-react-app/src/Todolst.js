@@ -12,12 +12,10 @@ const TodoList = () => {
   ]);
   const [newTask, setNewTask] = useState('');
   const [newDate, setNewDate] = useState('');
-
   const [editTaskId, setEditTaskId] = useState(null);
   const [editTaskName, setEditTaskName] = useState('');
   const [editTaskDate, setEditTaskDate] = useState('');
   
-
     // Lấy danh sách to-do từ API
     useEffect(() => {
       axios.get('http://localhost:3001/api/')
@@ -31,7 +29,6 @@ const TodoList = () => {
         .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
     }, []);
     
-
   // Hàm lấy màu ngẫu nhiên
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -74,7 +71,6 @@ const TodoList = () => {
     // Nếu ngày ngoài tuần hiện tại, hiển thị dưới dạng dd/mm/yyyy
     return dueDate.toLocaleDateString('en-GB');
   };
-  
   
   // function xóa task
   const deleteTask = (id) => {
@@ -175,59 +171,44 @@ const TodoList = () => {
       .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
   };
   
-
-
-// Edit mode toggle function
-const startEditing = (task) => {
-  setEditTaskId(task.id);
-  setEditTaskName(task.name);
-  setEditTaskDate(task.date);
-};
-
-// Cancel editing
-const cancelEditing = () => {
-  setEditTaskId(null);
-  setEditTaskName('');
-  setEditTaskDate('');
-};
-
-// Update task
-const updateTask = (id) => {
-  const taskToUpdate = tasks.find(task => task.id === id);
-  if (!taskToUpdate) return; // Nếu không tìm thấy task, dừng lại
-
-  const formattedDate = new Date(editTaskDate).toISOString().split('T')[0];
-
-  // Sử dụng toàn bộ thông tin của task, bao gồm `color` và `completed`
-  const updatedTask = { 
-    ...taskToUpdate,
-    name: editTaskName, 
-    date: formattedDate 
+  // Edit mode toggle function
+  const startEditing = (task) => {
+    setEditTaskId(task.id);
+    setEditTaskName(task.name);
+    setEditTaskDate(task.date);
   };
 
-  axios.put(`http://localhost:3001/api/update/${id}`, updatedTask)
-    .then(() => {
-      const updatedTasks = tasks.map(task =>
-        task.id === id ? { ...updatedTask, date: formatDueDate(formattedDate) } : task
-      );
-      setTasks(updatedTasks);
-      cancelEditing();
-    })
-    .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
-};
+  // Cancel editing
+  const cancelEditing = () => {
+    setEditTaskId(null);
+    setEditTaskName('');
+    setEditTaskDate('');
+  };
 
+  // Chỉnh sửa task
+  const updateTask = (id) => {
+    const taskToUpdate = tasks.find(task => task.id === id);
+    if (!taskToUpdate) return; // Nếu không tìm thấy task, dừng lại
 
+    const formattedDate = new Date(editTaskDate).toISOString().split('T')[0];
 
+    // Sử dụng toàn bộ thông tin của task, bao gồm `color` và `completed`
+    const updatedTask = { 
+     ...taskToUpdate,
+      name: editTaskName, 
+      date: formattedDate 
+    };
 
-
-
-
-
-
-
-
-
-
+    axios.put(`http://localhost:3001/api/update/${id}`, updatedTask)
+      .then(() => {
+        const updatedTasks = tasks.map(task =>
+         task.id === id ? { ...updatedTask, date: formatDueDate(formattedDate) } : task
+        );
+        setTasks(updatedTasks);
+        cancelEditing();
+      })
+      .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
+  };
 
   return (
     <div className="todo-container">
@@ -241,7 +222,7 @@ const updateTask = (id) => {
               onClick={() => toggleCompletion(task.id)}
             ></button>
 
-{editTaskId === task.id ? (
+            {editTaskId === task.id ? (
               <span>
                 <input
                   type="text"
@@ -259,21 +240,8 @@ const updateTask = (id) => {
                 <button onClick={cancelEditing} className='cancel-btn'>Cancel</button>
               </span>
             ) : (
-
-
-
-
-
-
-
-
-
-
-
             <span>{task.name} - {task.date}</span>
-
             )}
-
             <button 
               className="edit-btn"
               onClick={() => startEditing(task)}
