@@ -4,7 +4,7 @@ body {
 }
 
 .todo-container {
-  max-width: 600px;
+  max-width: 900px;
   margin: 30px auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -78,7 +78,7 @@ li.completed {
 }
 
 input[type="text"], input[type="date"], button.add-task {
-  width: 150px; /* Đặt cùng độ dài cho input và button */
+  width: 200px; /* Đặt cùng độ dài cho input và button */
   padding: 10px;
   margin: 0 5px;
   border-radius: 5px;
@@ -105,3 +105,45 @@ button.add-task {
 button.add-task:hover {
   background-color: #0056b3;
 }
+
+li button.edit-btn {
+  background-color:  #32ca55;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+li button.edit-btn:hover {
+  background-color: #218838;
+}
+
+button.save-btn, button.cancel-btn {
+  padding: 5px 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+button.save-btn {
+  background-color: #32ca55;
+  color: white;
+  margin-left: 8.5px;
+}
+
+button.save-btn:hover {
+  background-color: #218838;
+}
+
+button.cancel-btn {
+  background-color: red;
+  color: white;
+}
+
+button.cancel-btn:hover {
+  background-color: darkred;
+}
+

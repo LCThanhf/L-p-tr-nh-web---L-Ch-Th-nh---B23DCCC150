@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css'; 
 import axios from 'axios';
+import { parse, format, addDays, nextDay, isValid } from 'date-fns';
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([
@@ -11,6 +12,11 @@ const TodoList = () => {
   ]);
   const [newTask, setNewTask] = useState('');
   const [newDate, setNewDate] = useState('');
+
+  const [editTaskId, setEditTaskId] = useState(null);
+  const [editTaskName, setEditTaskName] = useState('');
+  const [editTaskDate, setEditTaskDate] = useState('');
+  
 
     // Lấy danh sách to-do từ API
     useEffect(() => {
@@ -110,24 +116,58 @@ const TodoList = () => {
   // Toggle trạng thái task
   const toggleCompletion = (id) => {
     const taskToUpdate = tasks.find(task => task.id === id);
-    // Kiểm tra xem `date` có ở định dạng chuẩn `yyyy-mm-dd` hay không
-    let originalDate = taskToUpdate.date;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(originalDate)) {
-      // Nếu không phải định dạng chuẩn, chuyển đổi về ngày gốc
-      originalDate = new Date(taskToUpdate.date).toISOString().split('T')[0];
+  
+    if (!taskToUpdate) {
+      console.error("Task not found:", id);
+      return;
     }
+  
+    console.log("Task to update:", taskToUpdate);
+  
+    let originalDate = taskToUpdate.date.toLowerCase();
+    let parsedDate;
+  
+    switch (originalDate) {
+      case 'today':
+        parsedDate = new Date();
+        break;
+      case 'tomorrow':
+        parsedDate = addDays(new Date(), 1);
+        break;
+      case 'saturday':
+        parsedDate = nextDay(new Date(), 6);
+        break;
+      // Add more cases as needed
+      default:
+        parsedDate = parse(originalDate, 'yyyy-MM-dd', new Date());
+        if (!isValid(parsedDate)) {
+          const dateParts = originalDate.split('/');
+          if (dateParts.length === 3) {
+            parsedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+          }
+        }
+    }
+  
+    if (!isValid(parsedDate)) {
+      console.error("Invalid date format:", taskToUpdate.date);
+      return;
+    }
+  
+    originalDate = format(parsedDate, 'yyyy-MM-dd');
   
     const updatedTask = { 
       ...taskToUpdate, 
       completed: !taskToUpdate.completed,
-      date: originalDate // Bảo toàn định dạng ngày chuẩn
+      date: originalDate
     };
+  
+    console.log("Updated task:", updatedTask);
   
     axios.put(`http://localhost:3001/api/update/${id}`, updatedTask)
       .then(() => {
         const updatedTasks = tasks.map(task =>
           task.id === id 
-            ? { ...updatedTask, date: formatDueDate(updatedTask.date) } // Hiển thị date đã định dạng
+            ? { ...updatedTask, date: formatDueDate(updatedTask.date) }
             : task
         );
         setTasks(updatedTasks);
@@ -135,6 +175,59 @@ const TodoList = () => {
       .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
   };
   
+
+
+// Edit mode toggle function
+const startEditing = (task) => {
+  setEditTaskId(task.id);
+  setEditTaskName(task.name);
+  setEditTaskDate(task.date);
+};
+
+// Cancel editing
+const cancelEditing = () => {
+  setEditTaskId(null);
+  setEditTaskName('');
+  setEditTaskDate('');
+};
+
+// Update task
+const updateTask = (id) => {
+  const taskToUpdate = tasks.find(task => task.id === id);
+  if (!taskToUpdate) return; // Nếu không tìm thấy task, dừng lại
+
+  const formattedDate = new Date(editTaskDate).toISOString().split('T')[0];
+
+  // Sử dụng toàn bộ thông tin của task, bao gồm `color` và `completed`
+  const updatedTask = { 
+    ...taskToUpdate,
+    name: editTaskName, 
+    date: formattedDate 
+  };
+
+  axios.put(`http://localhost:3001/api/update/${id}`, updatedTask)
+    .then(() => {
+      const updatedTasks = tasks.map(task =>
+        task.id === id ? { ...updatedTask, date: formatDueDate(formattedDate) } : task
+      );
+      setTasks(updatedTasks);
+      cancelEditing();
+    })
+    .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="todo-container">
@@ -147,11 +240,48 @@ const TodoList = () => {
               style={{ backgroundColor: task.color }}
               onClick={() => toggleCompletion(task.id)}
             ></button>
+
+{editTaskId === task.id ? (
+              <span>
+                <input
+                  type="text"
+                  value={editTaskName}
+                  onChange={(e) => setEditTaskName(e.target.value)}
+                  className="edit-input"
+                />
+                <input
+                  type="date"
+                  value={editTaskDate}
+                  onChange={(e) => setEditTaskDate(e.target.value)}
+                  className="edit-input"
+                />
+                <button onClick={() => updateTask(task.id)} className='save-btn'>Save</button>
+                <button onClick={cancelEditing} className='cancel-btn'>Cancel</button>
+              </span>
+            ) : (
+
+
+
+
+
+
+
+
+
+
+
             <span>{task.name} - {task.date}</span>
+
+            )}
+
+            <button 
+              className="edit-btn"
+              onClick={() => startEditing(task)}
+              ><i className="fa-solid fa-pen"></i></button>
             <button 
               className="delete-btn"
               onClick={() => deleteTask(task.id)}
-              >Delete</button>
+              ><i className="fa-solid fa-trash"></i></button>
           </li>
         ))}
       </ul>
