@@ -12,7 +12,7 @@ app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
-app.use('/api', todoRoutes); // Sử dụng các route đã định nghĩa
+app.use('/api', todoRoutes);
 
 // GET endpoint
 app.get('/', (req, res) => {

@@ -22,7 +22,7 @@ const TodoList = () => {
         .then(response => {
           const formattedTasks = response.data.map(task => ({
             ...task,
-            date: formatDueDate(task.date) // Sử dụng formatDueDate để định dạng ngày
+            date: formatDueDate(task.date) 
           }));
           setTasks(formattedTasks);
         })
@@ -130,10 +130,28 @@ const TodoList = () => {
       case 'tomorrow':
         parsedDate = addDays(new Date(), 1);
         break;
-      case 'saturday':
-        parsedDate = nextDay(new Date(), 6);
-        break;
-      // Add more cases as needed
+        case 'monday':
+          parsedDate = nextDay(new Date(), 1);
+          break;
+        case 'tuesday':
+          parsedDate = nextDay(new Date(), 2);
+          break;
+        case 'wednesday':
+          parsedDate = nextDay(new Date(), 3);
+          break;
+        case 'thursday':
+          parsedDate = nextDay(new Date(), 4);
+          break;
+        case 'friday':
+          parsedDate = nextDay(new Date(), 5);
+          break;
+        case 'saturday':
+          parsedDate = nextDay(new Date(), 6);
+          break;
+        case 'sunday':
+          parsedDate = nextDay(new Date(), 0);
+          break;
+     
       default:
         parsedDate = parse(originalDate, 'yyyy-MM-dd', new Date());
         if (!isValid(parsedDate)) {
@@ -171,14 +189,14 @@ const TodoList = () => {
       .catch(error => console.error("Lỗi khi cập nhật dữ liệu:", error));
   };
   
-  // Edit mode toggle function
+  // Bật chế độ chỉnh sửa
   const startEditing = (task) => {
     setEditTaskId(task.id);
     setEditTaskName(task.name);
     setEditTaskDate(task.date);
   };
 
-  // Cancel editing
+  // Hủy chế độ chỉnh sửa
   const cancelEditing = () => {
     setEditTaskId(null);
     setEditTaskName('');
@@ -192,7 +210,7 @@ const TodoList = () => {
 
     const formattedDate = new Date(editTaskDate).toISOString().split('T')[0];
 
-    // Sử dụng toàn bộ thông tin của task, bao gồm `color` và `completed`
+    
     const updatedTask = { 
      ...taskToUpdate,
       name: editTaskName, 
