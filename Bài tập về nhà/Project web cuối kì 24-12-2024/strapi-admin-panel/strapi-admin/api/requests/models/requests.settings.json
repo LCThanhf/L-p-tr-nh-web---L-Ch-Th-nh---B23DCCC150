@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "requests",
+  "info": {
+    "name": "requests"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "table_number": {
+      "type": "integer"
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}

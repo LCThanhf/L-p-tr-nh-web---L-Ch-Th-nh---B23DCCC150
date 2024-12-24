@@ -1,0 +1,58 @@
+.meal {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  align-items: flex-end;
+}
+
+.meal:first-child {
+  border-top: 1px solid #ccc; 
+  padding-top: 1rem; 
+}
+
+.meal h3 {
+  margin: 0 0 0.25rem 0;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+.price {
+  margin-top: 0.25rem;
+  font-weight: bold;
+  color: #ad5502;
+  font-size: 1.25rem;
+}
+
+.formContainer {
+  text-align: right;
+}
+
+
+@media (max-width: 400px) {
+  .meal h3 {
+    font-size: 1rem; /* Further adjust font size for even smaller screens */
+  }
+
+  .image {
+    width: 67px; /* Further adjust image size for even smaller screens */
+    height: 67px; /* Further adjust image size for even smaller screens */
+  }
+
+  .price {
+    font-size: 1rem; /* Further adjust font size for even smaller screens */
+  }
+
+  .meal {
+    margin: 0.5rem; /* Further adjust margin for even smaller screens */
+    padding-bottom: 0.5rem; /* Further adjust padding for even smaller screens */
+  }
+}

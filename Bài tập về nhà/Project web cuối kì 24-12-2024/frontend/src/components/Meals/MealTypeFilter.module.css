@@ -1,0 +1,148 @@
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.select {
+  flex: 1;
+  max-width: 295px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.searchContainer {
+  position: relative;
+  flex: 1;
+  max-width: 296.6px;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.5rem;
+  padding-left: 2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.5rem;
+  color: #504a4a;
+}
+
+@media (max-width: 600px) {
+  .filterContainer {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .select, .searchContainer {
+    flex: 1 1 50%;
+    max-width: none;
+  }
+
+  .select {
+    flex-basis: 50%;
+  }
+
+  .searchContainer {
+    flex-basis: 50%;
+  }
+  .serviceButton {
+    width: 100%; /* Ensures full-width coverage on small screens */
+    max-width: none;
+  }
+}
+
+  .meals {
+    max-width: 60rem;
+    width: 90%;
+    margin: 2rem auto;
+    animation: meals-appear 1s ease-out forwards;
+  }
+  
+  .mealsLoading {
+    text-align: center;
+    color: #fff;
+  }
+  
+  .mealsError {
+    text-align: center;
+    color: red;
+  }
+  
+  .noItemsFound {
+    text-align: center;
+    color: #ff0000;
+    font-size: 1.5rem;
+  }
+  
+  .meals ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  @keyframes meals-appear {
+    from {
+      opacity: 0;
+      transform: translateY(3rem);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* New styles for the "Ask for service" button */
+.serviceButton {
+  width: 100%;
+  max-width: 600px; 
+  padding: 0.56rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #8a2b06;
+  color: white;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.serviceButton:hover,
+.serviceButton:active {
+  background-color: #5a1a01;
+  border-color: #5a1a01;
+}
+
+.serviceButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  margin-top: -0.5rem;
+}
+
+/* New styles for the icon */
+.serviceIcon {
+  margin-right: 0.5rem;
+  font-size: 0.9rem; /* Smaller size */
+  align-items: center;
+}

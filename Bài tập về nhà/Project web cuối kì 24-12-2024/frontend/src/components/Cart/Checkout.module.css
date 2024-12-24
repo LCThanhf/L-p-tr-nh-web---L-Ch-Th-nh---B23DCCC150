@@ -1,0 +1,141 @@
+.form {
+  margin: 0rem 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Ensure it grows to fit the container */
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.control input {
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 20rem;
+  max-width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions .button--alt {
+  color: #8a2b06;
+  background-color: transparent;
+  border: 1px solid #8a2b06;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.actions .button--alt:hover,
+.actions .button--alt:active {
+  background-color: #5a1a01; /* Change hover color */
+  color: white; /* Ensure text color is visible */
+}
+
+.actions button {
+  font: inherit;
+  color: #5a1a01;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 2rem;
+}
+
+.actions button:hover,
+.actions button:active {
+  background-color: #ffe6dc;
+}
+
+.actions .button {
+  background-color: #8a2b06;
+  color: white;
+  border: 1px solid #8a2b06;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.actions .button:hover,
+.actions .button:active {
+  background-color: #5a1a01;
+  border-color: #5a1a01;
+} 
+
+.invalid label {
+  color: #ca3e51;
+}
+
+.invalid input {
+  border-color: #aa0b20;
+  background-color: #ffeff1;
+}
+
+
+.paymentMethods {
+  margin-top: 0rem;
+  margin-bottom: 0.56rem;
+}
+
+.paymentMethods label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.radioGroup input {
+  accent-color: #5a1a01; /* Change color to match the button style */
+}
+
+.radioGroup i {
+  color: #288625; /* Matches the button styling */
+  font-size: 1.3rem;
+}
+
+@media (max-width: 600px) {
+  .form {
+    height: auto; /* Allow the form to adjust its height */
+    margin: 0;
+  }
+  .radioGroup i {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .radioGroup i {
+    font-size: 1.1rem;
+  }
+  .radioGroup label {
+    font-size: 0.9rem;
+  }
+  .paymentMethods label {
+    font-size: 0.9rem;
+  }
+}

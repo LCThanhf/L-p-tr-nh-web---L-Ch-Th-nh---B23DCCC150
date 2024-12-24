@@ -1,0 +1,16 @@
+node_modules
+package-lock.json
+.env
+.DS_Store
+dist
+coverage
+*.log
+*.tmp
+*.swp
+.idea
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

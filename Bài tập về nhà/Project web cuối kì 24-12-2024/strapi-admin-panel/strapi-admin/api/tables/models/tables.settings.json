@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tables",
+  "info": {
+    "name": "tables",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "table_number": {
+      "type": "integer"
+    },
+    "qr_code_image": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "name": "orders"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "table_number": {
+      "type": "integer"
+    },
+    "items": {
+      "type": "text"
+    },
+    "total_amount": {
+      "type": "integer"
+    },
+    "order_date": {
+      "type": "datetime"
+    },
+    "payment_method": {
+      "type": "enumeration",
+      "enum": [
+        "cash",
+        "bankTransfer"
+      ]
+    },
+    "total_price": {
+      "type": "decimal"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "waiting",
+        "finished"
+      ]
+    }
+  }
+}
