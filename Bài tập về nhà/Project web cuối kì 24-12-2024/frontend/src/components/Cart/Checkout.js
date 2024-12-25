@@ -3,6 +3,7 @@ import classes from "./Checkout.module.css";
 
 const Checkout = (props) => {
   const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   useEffect(() => {
     if (props.savedUserData) {
@@ -12,6 +13,12 @@ const Checkout = (props) => {
 
   const confirmHandler = (event) => {
     event.preventDefault();
+
+    const url = window.location.href;
+    if (!url.includes("/table")) {
+      setErrorMessage("Cannot find your table!");
+      return;
+    }
 
     // Show QR code if payment method is bank transfer
     props.onSubmit({
@@ -25,6 +32,7 @@ const Checkout = (props) => {
 
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
+      {errorMessage && <p className={classes.error}>{errorMessage}</p>} {/* Display error message */}
       <div className={classes.paymentMethods}>
         <label>Payment Methods</label>
         <div className={classes.radioGroup}>
