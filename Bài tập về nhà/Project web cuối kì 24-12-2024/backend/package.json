@@ -20,6 +20,7 @@
     "express-session": "^1.18.1",
     "fs-extra": "^11.2.0",
     "mysql2": "^3.11.5",
+    "react-router-dom": "^6.28.1",
     "sequelize": "^6.37.5",
     "styled-components": "^6.1.13"
   },

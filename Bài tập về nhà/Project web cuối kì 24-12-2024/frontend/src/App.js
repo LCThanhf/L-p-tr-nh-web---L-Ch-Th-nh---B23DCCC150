@@ -1,4 +1,3 @@
-// filepath: /c:/Users/chith/Downloads/react-food-ordering/frontend/src/App.js
 import { useState, useEffect } from "react";
 import Cart from "./components/Cart/Cart";
 import Header from "./components/Layout/Header";
@@ -9,16 +8,23 @@ function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
   const [selectedType, setSelectedType] = useState('ALL');
   const [tableInfo, setTableInfo] = useState(null);
+  const [tableNumber, setTableNumber] = useState(null);
 
   useEffect(() => {
-    // Fetch table info based on some criteria, e.g., from URL or other source
-    const fetchTableInfo = async () => {
-      const response = await fetch('http://localhost:5000/api/table-info?tableNumber=1'); // Example URL
-      const data = await response.json();
-      setTableInfo(data);
-    };
+    const url = window.location.href;
+    const tableNumberMatch = url.match(/\/table(\d+)/);
+    const tableNumber = tableNumberMatch ? tableNumberMatch[1] : null;
+    setTableNumber(tableNumber);
 
-    fetchTableInfo();
+    if (tableNumber) {
+      const fetchTableInfo = async () => {
+        const response = await fetch(`http://localhost:5000/api/table-info?tableNumber=${tableNumber}`);
+        const data = await response.json();
+        setTableInfo(data);
+      };
+
+      fetchTableInfo();
+    }
   }, []);
 
   const showCardHandle = () => {
